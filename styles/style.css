@@ -1,11 +1,19 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
 
+:root {
+  --accent-color: #ff0000;
+  --bg-light: #eef9bf;
+  --fc-title: #75b79e;
+  --bg-medium: #a7e9af;
+  --border-light: #99cea8;
+}
+
 body {
   font-family: "Roboto", sans-serif;
 }
 
 .container {
-  background: #eef9bf;
+  background: var(--bg-light);
   height: 100vh;
   padding: 40px 100px 0;
 }
@@ -13,16 +21,28 @@ body {
 h1 {
   font-size: 56px;
   font-weight: 700;
-  color: #75b79e;
+  color: var(--fc-title);
   text-align: center;
   margin-bottom: 45px;
+}
+
+main {
+  display: flex;
+  gap: 33px;
+
+  flex-wrap: wrap;
 }
 
 .card {
   width: 117px;
   height: 146px;
-
   perspective: 1000px;
+
+  flex-shrink: 0;
+}
+
+.card:hover {
+  cursor: pointer;
 }
 
 .card-inner {
@@ -38,7 +58,7 @@ h1 {
   height: 100px;
 }
 
-.card:hover .card-inner {
+.selected .card-inner {
   transform: rotateY(180deg);
 }
 
@@ -50,8 +70,8 @@ h1 {
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
 
-  background: #a7e9af;
-  border: 1px solid #99cea8;
+  background: var(--bg-medium);
+  border: 1px solid var(--border-light);
   border-radius: 5px;
 
   display: flex;
@@ -61,4 +81,88 @@ h1 {
 
 .card-back {
   transform: rotateY(180deg);
+}
+
+.overlay {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 999;
+
+  background-image: url("/media/bg.png");
+  background-size: 400px;
+  background-color: rgba(216, 241, 223, 0.7);
+
+  width: 100vw;
+  height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+form {
+  width: 250px;
+  /* height: 300px; */
+  background-color: lightyellow;
+
+  padding: 20px;
+  border-radius: 10px;
+  border: 1px solid #ff0000;
+}
+
+fieldset {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+fieldset * {
+  margin-bottom: 15px;
+}
+
+legend {
+  font-size: 22px;
+  text-align: center;
+  font-weight: 700;
+  color: #ff0000;
+}
+
+label,
+input {
+  color: #9f7e69;
+}
+
+input {
+  border-radius: 50px;
+  border: none;
+  box-shadow: 0 0 0 2px var(--accent-color);
+  height: 40px;
+  width: 150px;
+
+  text-align: center;
+  font-size: 20px;
+}
+
+input:focus {
+  box-shadow: 0 0 0 2px var(--border-light);
+  outline: none;
+  /* border: transparent; */
+}
+
+input:last-of-type {
+  background-color: var(--accent-color);
+  color: #fff;
+  font-weight: 700;
+}
+
+input:last-of-type:hover {
+  background-color: var(--border-light);
+  cursor: pointer;
+  box-shadow: 0 0 0 2px var(--border-light);
+}
+
+.hidden {
+  display: none;
 }
