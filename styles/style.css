@@ -14,7 +14,7 @@ body {
 
 .container {
   background: var(--bg-light);
-  height: 100vh;
+  height: calc(100vh + 100%);
   padding: 40px 100px 0;
 }
 
@@ -24,19 +24,23 @@ h1 {
   color: var(--fc-title);
   text-align: center;
   margin-bottom: 45px;
+
+  text-transform: uppercase;
 }
 
 main {
   display: flex;
-  gap: 33px;
-
+  justify-content: space-between;
   flex-wrap: wrap;
+  gap: 30px;
 }
 
 .card {
   width: 117px;
   height: 146px;
   perspective: 1000px;
+
+  /* margin-bottom: 30px; */
 
   flex-shrink: 0;
 }
@@ -58,7 +62,8 @@ main {
   height: 100px;
 }
 
-.selected .card-inner {
+.selected .card-inner,
+.match .card-inner {
   transform: rotateY(180deg);
 }
 
@@ -109,7 +114,7 @@ form {
 
   padding: 20px;
   border-radius: 10px;
-  border: 1px solid #ff0000;
+  border: 1px solid var(--accent-color);
 }
 
 fieldset {
@@ -126,12 +131,17 @@ legend {
   font-size: 22px;
   text-align: center;
   font-weight: 700;
-  color: #ff0000;
+  color: var(--accent-color);
 }
 
 label,
 input {
   color: #9f7e69;
+}
+
+label span {
+  color: var(--accent-color);
+  font-weight: 700;
 }
 
 input {
@@ -165,4 +175,16 @@ input:last-of-type:hover {
 
 .hidden {
   display: none;
+}
+
+@media (max-width: 500px) {
+  main {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  h1 {
+    font-size: 36px;
+    line-height: 42px;
+  }
 }

@@ -1,49 +1,103 @@
-const cardList = [];
-let delay = 0;
+const cardArray = [];
+const parrotArray = ["bobrossparrot", "explodyparrot", "fiestaparrot", "metalparrot", "revertitparrot", "tripletsparrot", "unicornparrot"];
+let cardAmount = 8;
 
-function howManyCards() {
-  // ALTERAR DEPOIS
-  const cardAmount = 6;
-  // const cardAmount = Number(document.querySelector("#number").value);
+//embaralha o array
+function randomizer() {
+  return Math.random() - 0.5;
+}
+
+function cardGenerator() {
+
+  parrotArray.sort(randomizer);
+
+  for (let i = 0; i < cardAmount / 2; i++) {
+
+    const parrot = {
+      name: parrotArray[i],
+      adress: `./media/${parrotArray[i]}.gif`,
+    }
+
+    cardArray.push(parrot);
+    cardArray.push(parrot);
+  }
+
+  cardArray.sort(randomizer);
+}
+
+function modal() {
+
+  cardAmount = Number(document.querySelector("#number").value);
+
+  cardGenerator();
+
   const main = document.querySelector("main");
   const label = document.querySelector("label")
 
   if (cardAmount % 2 !== 0) {
-    label.innerText = "Digite um número par!";
+    label.innerHTML = `Digite um número <span>par!</span>`;
+
   } else {
     document.querySelector(".overlay").classList.add("hidden");
+
+    for (let i = 0; i < cardArray.length; i++) {
+      main.innerHTML += `
+      <div class="card ${cardArray[i].name}" onclick="rotate(this)">
+      <div class="card-inner">
+      <div class="card-front">
+      <img src="media/card-cover.png" alt="">
+      </div>
+      <div class="card-back">
+      <img src="${cardArray[i].adress}" alt="">
+      </div>
+      </div>
+      </div>`;
+    }
+  }
+}
+
+function matchCards(selectedCards) {
+
+  const firstCard = selectedCards[0].classList.value;
+  const secondCard = selectedCards[1].classList.value;
+
+  if (firstCard == secondCard) {
+    return true;
   }
 
-  for (let i = 0; i < cardAmount; i++) {
-    main.innerHTML += `<div class="card" onclick="rotate(this)"><div class="card-inner"><div class="card-front"><img src="media/card-cover.png" alt=""></div><div class="card-back"><img src="media/unicornparrot.gif" alt=""></div>
-    </div>
-  </div>`;
-  }
+  return false;
 
 }
 
 function openCard(card) {
+
   card.classList.add("selected");
+
+  closeCards();
 }
 
-function closeCards(openedCards) {
-  for (let i = 0; i < openedCards.length; i++) {
-    openedCards[i].classList.remove("selected");
+function closeCards() {
+
+  const selectedCards = document.querySelectorAll(".selected");
+
+  if (selectedCards.length == 2) {
+
+    if (matchCards(selectedCards)) {
+      for (let i = 0; i < selectedCards.length; i++) {
+        selectedCards[i].classList.add("match");
+      }
+    } else {
+      setTimeout(() => {
+        for (let i = 0; i < selectedCards.length; i++) {
+          selectedCards[i].classList.remove("selected");
+        };
+      }, 1000);
+    }
   }
 }
 
 function rotate(card) {
-  const openedCards = document.querySelectorAll(".selected");
 
-  if (openedCards.length >= 2) {
-    closeCards(openedCards);
-    delay = 300;
-  }
-
-  setTimeout(() => {
-    openCard(card);
-
-  }, delay);
-  delay = 0;
+  openCard(card);
 
 }

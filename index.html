@@ -12,14 +12,14 @@
 
 <!-- RETIRAR ONLOAD DEPOIS -->
 
-<body onload="howManyCards()">
+<body onload="">
   <div class="container">
-    <div class="overlay hidden">
-      <form action="javascript:;" method="get" onsubmit="howManyCards()">
+    <div class="overlay">
+      <form action="javascript:;" method="get" onsubmit="modal()">
         <fieldset>
           <legend>Com quantas cartas deseja jogar?</legend>
-          <label for="number">Digite um número</label>
-          <input id="number" type="number" max="14" required>
+          <label for="number"></label>
+          <input id="number" type="number" min="4" max="14" required>
           <input type="submit" value="Jogar">
         </fieldset>
       </form>
@@ -28,26 +28,7 @@
       <h1>Parrot Card Game</h1>
     </header>
     <main>
-      <div class="card" onclick="rotate(this)">
-        <div class="card-inner">
-          <div class="card-front">
-            <img src="media/card-cover.png" alt="">
-          </div>
-          <div class="card-back">
-            <img src="media/unicornparrot.gif" alt="">
-          </div>
-        </div>
-      </div>
-      <div class="card" onclick="rotate(this)">
-        <div class="card-inner">
-          <div class="card-front">
-            <img src="media/card-cover.png" alt="">
-          </div>
-          <div class="card-back">
-            <img src="media/unicornparrot.gif" alt="">
-          </div>
-        </div>
-      </div>
+
     </main>
   </div>
 
