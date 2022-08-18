@@ -1,15 +1,16 @@
 const cardArray = [];
 const parrotArray = ["bobrossparrot", "explodyparrot", "fiestaparrot", "metalparrot", "revertitparrot", "tripletsparrot", "unicornparrot"];
-let cardAmount = 8;
+let cardAmount = 0;
+let playerMovesCounter = 0;
 
 //embaralha o array
-function randomizer() {
+function shuffleArray() {
   return Math.random() - 0.5;
 }
 
-function cardGenerator() {
+function createCardArray() {
 
-  parrotArray.sort(randomizer);
+  parrotArray.sort(shuffleArray);
 
   for (let i = 0; i < cardAmount / 2; i++) {
 
@@ -22,27 +23,26 @@ function cardGenerator() {
     cardArray.push(parrot);
   }
 
-  cardArray.sort(randomizer);
+  cardArray.sort(shuffleArray);
 }
 
-function modal() {
+function getHowManyCardsToPlay() {
 
-  cardAmount = Number(document.querySelector("#number").value);
+  cardAmount = prompt("Com quantas cartas quer jogar?");
 
-  cardGenerator();
+  while (isNaN(cardAmount) || cardAmount < 4 || cardAmount > 14) {
+
+    cardAmount = Number(prompt("Digite um número válido entre 4 e 14! Não use letras"));
+
+  }
+
+  createCardArray();
 
   const main = document.querySelector("main");
-  const label = document.querySelector("label")
 
-  if (cardAmount % 2 !== 0) {
-    label.innerHTML = `Digite um número <span>par!</span>`;
-
-  } else {
-    document.querySelector(".overlay").classList.add("hidden");
-
-    for (let i = 0; i < cardArray.length; i++) {
-      main.innerHTML += `
-      <div class="card ${cardArray[i].name}" onclick="rotate(this)">
+  for (let i = 0; i < cardArray.length; i++) {
+    main.innerHTML += `
+      <div class="card ${cardArray[i].name}" onclick="flip(this)">
       <div class="card-inner">
       <div class="card-front">
       <img src="media/card-cover.png" alt="">
@@ -52,11 +52,11 @@ function modal() {
       </div>
       </div>
       </div>`;
-    }
   }
+
 }
 
-function matchCards(selectedCards) {
+function cardMatch(selectedCards) {
 
   const firstCard = selectedCards[0].classList.value;
   const secondCard = selectedCards[1].classList.value;
@@ -71,33 +71,66 @@ function matchCards(selectedCards) {
 
 function openCard(card) {
 
-  card.classList.add("selected");
-
-  closeCards();
-}
-
-function closeCards() {
+  playerMovesCounter++;
 
   const selectedCards = document.querySelectorAll(".selected");
 
+  if (selectedCards.length <= 1) {
+    card.classList.add("selected");
+  }
+  closeCards(selectedCards);
+}
+
+function closeCards(selectedCards) {
+
+  selectedCards = document.querySelectorAll(".selected");
+
   if (selectedCards.length == 2) {
 
-    if (matchCards(selectedCards)) {
+    if (cardMatch(selectedCards)) {
       for (let i = 0; i < selectedCards.length; i++) {
         selectedCards[i].classList.add("match");
       }
-    } else {
-      setTimeout(() => {
-        for (let i = 0; i < selectedCards.length; i++) {
-          selectedCards[i].classList.remove("selected");
-        };
-      }, 1000);
+    }
+
+    setTimeout(() => {
+      for (let i = 0; i < selectedCards.length; i++) {
+        selectedCards[i].classList.remove("selected");
+      };
+    }, 1000);
+  }
+
+}
+
+function isGameOver() {
+  const matchingCards = document.querySelectorAll(".match");
+
+  if (matchingCards.length == cardArray.length) {
+
+    const playAgain = prompt(`Você ganhou em ${playerMovesCounter} jogadas!\nDeseja jogar novamente? sim / não`);
+    playAgain.toLowerCase();
+
+    if (playAgain == "sim") {
+      clearCardsOnScreen();
+      getHowManyCardsToPlay();
+      playerMovesCounter = 0;
     }
   }
 }
 
-function rotate(card) {
+function clearCardsOnScreen() {
+  const htmlCards = document.querySelectorAll(".card");
+
+  for (let i = 0; i < htmlCards.length; i++) {
+    htmlCards[i].remove();
+    cardArray.pop();
+  }
+}
+
+function flip(card) {
 
   openCard(card);
-
+  isGameOver();
 }
+
+getHowManyCardsToPlay();
