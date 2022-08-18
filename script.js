@@ -3,7 +3,6 @@ const parrotArray = ["bobrossparrot", "explodyparrot", "fiestaparrot", "metalpar
 let cardAmount = 0;
 let playerMovesCounter = 0;
 
-//embaralha o array
 function shuffleArray() {
   return Math.random() - 0.5;
 }
