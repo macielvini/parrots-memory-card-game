@@ -1,7 +1,17 @@
 const cardArray = [];
 const parrotArray = ["bobrossparrot", "explodyparrot", "fiestaparrot", "metalparrot", "revertitparrot", "tripletsparrot", "unicornparrot"];
+
 let cardAmount = 0;
 let playerMovesCounter = 0;
+let seconds = 0;
+
+let interval;
+
+function countSeconds() {
+  const timer = document.querySelector("#timer span");
+  timer.innerHTML = seconds;
+  seconds++;
+}
 
 function shuffleArray() {
   return Math.random() - 0.5;
@@ -29,9 +39,9 @@ function getHowManyCardsToPlay() {
 
   cardAmount = prompt("Com quantas cartas quer jogar?");
 
-  while (isNaN(cardAmount) || cardAmount < 4 || cardAmount > 14) {
+  while (isNaN(cardAmount) || (cardAmount < 4 || cardAmount > 14) || cardAmount % 2 !== 0) {
 
-    cardAmount = Number(prompt("Digite um número válido entre 4 e 14! Não use letras"));
+    cardAmount = Number(prompt("Digite um número par entre 4 e 14! Não use letras"));
 
   }
 
@@ -52,6 +62,8 @@ function getHowManyCardsToPlay() {
       </div>
       </div>`;
   }
+
+  interval = setInterval(countSeconds, 1000)
 
 }
 
@@ -106,14 +118,21 @@ function isGameOver() {
 
   if (matchingCards.length == cardArray.length) {
 
-    const playAgain = prompt(`Você ganhou em ${playerMovesCounter} jogadas!\nDeseja jogar novamente? sim / não`);
-    playAgain.toLowerCase();
+    clearInterval(interval);
 
-    if (playAgain == "sim") {
+    let playAgain = prompt(`Você ganhou em ${playerMovesCounter} jogadas!\nDeseja jogar novamente? sim / não`);
+
+    while (playAgain.toLowerCase() != "sim" && playAgain.toLowerCase() != "não") {
+      playAgain = prompt(`Você ganhou em ${playerMovesCounter} jogadas!\nDeseja jogar novamente? sim / não`);
+    }
+
+    if (playAgain.toLowerCase() == "sim") {
       clearCardsOnScreen();
       getHowManyCardsToPlay();
       playerMovesCounter = 0;
+      seconds = 0;
     }
+
   }
 }
 
@@ -132,4 +151,4 @@ function flip(card) {
   isGameOver();
 }
 
-getHowManyCardsToPlay();
+getHowManyCardsToPlay()

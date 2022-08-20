@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Silkscreen:wght@400;700&display=swap");
 
 :root {
   --accent-color: #ff0000;
@@ -23,14 +23,43 @@ body {
   align-items: center;
 }
 
+header {
+  margin-bottom: 45px;
+  text-align: center;
+
+  /* display: flex;
+  flex-direction: column;
+  align-items: center; */
+}
+
 h1 {
   font-size: 56px;
   font-weight: 700;
   color: var(--fc-title);
-  text-align: center;
-  margin-bottom: 45px;
 
   text-transform: uppercase;
+}
+
+#timer {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 2;
+  padding: 10px;
+
+  background-color: var(--accent-color);
+
+  font-family: "Silkscreen", cursive;
+  font-size: 18px;
+  color: #fff;
+
+  border: solid 2px #fff;
+}
+
+#timer span {
+  font-size: 32px;
 }
 
 main {
