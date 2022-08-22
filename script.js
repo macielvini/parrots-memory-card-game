@@ -52,14 +52,14 @@ function getHowManyCardsToPlay() {
   for (let i = 0; i < cardArray.length; i++) {
     main.innerHTML += `
       <div class="card ${cardArray[i].name}" onclick="flip(this)">
-      <div class="card-inner">
-      <div class="card-front">
-      <img src="media/card-cover.png" alt="">
-      </div>
-      <div class="card-back">
-      <img src="${cardArray[i].adress}" alt="">
-      </div>
-      </div>
+        <div class="card-inner">
+          <div class="card-front">
+            <img src="media/card-cover.png" alt="">
+          </div>
+          <div class="card-back">
+            <img src="${cardArray[i].adress}" alt="">
+          </div>
+        </div>
       </div>`;
   }
 
@@ -86,7 +86,9 @@ function openCard(card) {
 
   const selectedCards = document.querySelectorAll(".selected");
 
-  if (selectedCards.length <= 1) {
+  // a variavel selectedCards ainda não está atualizada e mostra apenas 01 elemente no nodeList, por isso < 2
+
+  if (selectedCards.length < 2) {
     card.classList.add("selected");
   }
   closeCards(selectedCards);
@@ -94,6 +96,7 @@ function openCard(card) {
 
 function closeCards(selectedCards) {
 
+  //necessário para atualizar a variavel e mostrar 2 elementos no nodeList
   selectedCards = document.querySelectorAll(".selected");
 
   if (selectedCards.length == 2) {
@@ -118,6 +121,7 @@ function isGameOver() {
 
   if (matchingCards.length == cardArray.length) {
 
+    //limpa o contador
     clearInterval(interval);
 
     let playAgain = prompt(`Você ganhou em ${playerMovesCounter} jogadas!\nDeseja jogar novamente? sim / não`);

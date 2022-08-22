@@ -75,8 +75,6 @@ main {
   height: 146px;
   perspective: 1000px;
 
-  /* margin-bottom: 30px; */
-
   flex-shrink: 0;
 }
 
